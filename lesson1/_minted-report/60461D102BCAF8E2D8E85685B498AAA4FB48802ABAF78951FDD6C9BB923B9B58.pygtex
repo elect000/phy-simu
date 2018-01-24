@@ -1,0 +1,60 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cp}{\PYGZsh{}include} \PYG{c+cpf}{\PYGZlt{}stdio.h\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}include} \PYG{c+cpf}{\PYGZlt{}stdlib.h\PYGZgt{}}
+
+\PYG{c+cp}{\PYGZsh{}define MY\PYGZus{}PI 3.14159}
+
+\PYG{k+kt}{void} \PYG{n+nf}{set\PYGZus{}values} \PYG{p}{(}\PYG{k+kt}{int}\PYG{p}{,} \PYG{k+kt}{int}\PYG{p}{,} \PYG{k+kt}{double}\PYG{o}{*}\PYG{p}{,} \PYG{k+kt}{double}\PYG{o}{*}\PYG{p}{);}
+\PYG{k+kt}{double} \PYG{n+nf}{hit\PYGZus{}miss\PYGZus{}test} \PYG{p}{(}\PYG{k+kt}{int}\PYG{p}{,} \PYG{k+kt}{double}\PYG{o}{*}\PYG{p}{,} \PYG{k+kt}{double}\PYG{o}{*}\PYG{p}{);}
+
+\PYG{k+kt}{int} \PYG{n+nf}{main} \PYG{p}{(}\PYG{k+kt}{void}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+  \PYG{k+kt}{double} \PYG{o}{*}\PYG{n}{x}\PYG{p}{;}
+  \PYG{k+kt}{double} \PYG{o}{*}\PYG{n}{y}\PYG{p}{;}
+
+  \PYG{k+kt}{int} \PYG{n}{t}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{]} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{l+m+mi}{100}\PYG{p}{,} \PYG{l+m+mi}{1000}\PYG{p}{,} \PYG{l+m+mi}{10000}\PYG{p}{\PYGZcb{};}
+  \PYG{k+kt}{int} \PYG{n}{seed} \PYG{p}{[}\PYG{l+m+mi}{10}\PYG{p}{]} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{l+m+mi}{149}\PYG{p}{,} \PYG{l+m+mi}{193}\PYG{p}{,} \PYG{l+m+mi}{251}\PYG{p}{,} \PYG{l+m+mi}{383}\PYG{p}{,} \PYG{l+m+mi}{457}\PYG{p}{,} \PYG{l+m+mi}{503}\PYG{p}{,} \PYG{l+m+mi}{691}\PYG{p}{,} \PYG{l+m+mi}{761}\PYG{p}{,} \PYG{l+m+mi}{829}\PYG{p}{,} \PYG{l+m+mi}{991}\PYG{p}{\PYGZcb{};}
+  \PYG{k+kt}{int} \PYG{n}{i}\PYG{p}{,} \PYG{n}{j}\PYG{p}{;}
+  \PYG{k+kt}{double} \PYG{n}{hits}\PYG{p}{;}
+  \PYG{k}{for} \PYG{p}{(}\PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{k}{sizeof} \PYG{p}{(}\PYG{n}{t}\PYG{p}{)} \PYG{o}{/} \PYG{k}{sizeof} \PYG{p}{(}\PYG{n}{t} \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]);} \PYG{o}{++}\PYG{n}{i}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{n}{hits} \PYG{o}{=} \PYG{l+m+mf}{0.0}\PYG{p}{;}
+    \PYG{n}{x} \PYG{o}{=} \PYG{p}{(}\PYG{k+kt}{double}\PYG{o}{*}\PYG{p}{)} \PYG{n}{malloc} \PYG{p}{(}\PYG{k}{sizeof} \PYG{p}{(}\PYG{k+kt}{double}\PYG{p}{)} \PYG{o}{*} \PYG{n}{t}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]);}
+    \PYG{n}{y} \PYG{o}{=} \PYG{p}{(}\PYG{k+kt}{double}\PYG{o}{*}\PYG{p}{)} \PYG{n}{malloc} \PYG{p}{(}\PYG{k}{sizeof} \PYG{p}{(}\PYG{k+kt}{double}\PYG{p}{)} \PYG{o}{*} \PYG{n}{t}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]);}
+
+    \PYG{k}{if} \PYG{p}{((}\PYG{n}{x} \PYG{o}{==} \PYG{n+nb}{NULL}\PYG{p}{)} \PYG{o}{||} \PYG{p}{(}\PYG{n}{y} \PYG{o}{==} \PYG{n+nb}{NULL}\PYG{p}{))} \PYG{p}{\PYGZob{}}
+      \PYG{n}{printf} \PYG{p}{(}\PYG{l+s}{\PYGZdq{}malloc error }\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{);}
+      \PYG{n}{exit} \PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+
+    \PYG{k}{for} \PYG{p}{(}\PYG{n}{j} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{j} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{10}\PYG{p}{;} \PYG{o}{++}\PYG{n}{j}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+      \PYG{n}{set\PYGZus{}values}\PYG{p}{(}\PYG{n}{seed} \PYG{p}{[}\PYG{n}{j}\PYG{p}{],} \PYG{n}{t}\PYG{p}{[}\PYG{n}{i}\PYG{p}{],} \PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{);}
+      \PYG{n}{hits} \PYG{o}{+=} \PYG{n}{hit\PYGZus{}miss\PYGZus{}test} \PYG{p}{(}\PYG{n}{t} \PYG{p}{[}\PYG{n}{i}\PYG{p}{],} \PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n}{hits} \PYG{o}{=} \PYG{p}{(}\PYG{n}{hits} \PYG{o}{/} \PYG{l+m+mf}{10.0}\PYG{p}{)} \PYG{o}{*} \PYG{l+m+mf}{4.0}\PYG{p}{;}
+    \PYG{n}{printf} \PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZpc{}5d: \PYGZpc{}f : \PYGZpc{}f}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
+            \PYG{n}{t} \PYG{p}{[}\PYG{n}{i}\PYG{p}{],} \PYG{n}{hits}\PYG{p}{,} \PYG{p}{((}\PYG{n}{MY\PYGZus{}PI} \PYG{o}{\PYGZhy{}} \PYG{n}{hits}\PYG{p}{)} \PYG{o}{/} \PYG{n}{MY\PYGZus{}PI}\PYG{p}{));}
+  \PYG{p}{\PYGZcb{}}
+  \PYG{n}{free}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);}
+  \PYG{n}{free}\PYG{p}{(}\PYG{n}{y}\PYG{p}{);}
+  \PYG{k}{return} \PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kt}{double} \PYG{n+nf}{hit\PYGZus{}miss\PYGZus{}test} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{N}\PYG{p}{,} \PYG{k+kt}{double}\PYG{o}{*} \PYG{n}{x}\PYG{p}{,} \PYG{k+kt}{double}\PYG{o}{*} \PYG{n}{y}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+  \PYG{k+kt}{int} \PYG{n}{i}\PYG{p}{;}
+  \PYG{k+kt}{int} \PYG{n}{hit} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+  \PYG{k}{for} \PYG{p}{(}\PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{N}\PYG{p}{;} \PYG{o}{++}\PYG{n}{i}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{k}{if} \PYG{p}{(}\PYG{l+m+mf}{1.0} \PYG{o}{\PYGZgt{}=} \PYG{p}{((}\PYG{n}{x} \PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{*} \PYG{n}{x} \PYG{p}{[}\PYG{n}{i}\PYG{p}{])} \PYG{o}{+} \PYG{p}{(}\PYG{n}{y} \PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{*} \PYG{n}{y} \PYG{p}{[}\PYG{n}{i}\PYG{p}{])))} \PYG{p}{\PYGZob{}}
+      \PYG{n}{hit}\PYG{o}{++}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+  \PYG{p}{\PYGZcb{}}
+  \PYG{k}{return} \PYG{p}{((}\PYG{k+kt}{double}\PYG{p}{)} \PYG{n}{hit} \PYG{o}{/} \PYG{n}{N}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kt}{void} \PYG{n+nf}{set\PYGZus{}values} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{seed}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{N}\PYG{p}{,} \PYG{k+kt}{double} \PYG{o}{*}\PYG{n}{x}\PYG{p}{,} \PYG{k+kt}{double} \PYG{o}{*}\PYG{n}{y}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+  \PYG{n}{srand}\PYG{p}{(}\PYG{n}{seed}\PYG{p}{);}
+  \PYG{k+kt}{int} \PYG{n}{i}\PYG{p}{;}
+  \PYG{k}{for} \PYG{p}{(}\PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{N}\PYG{p}{;} \PYG{o}{++}\PYG{n}{i}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{n}{x}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{1.0} \PYG{o}{+} \PYG{p}{(}\PYG{l+m+mf}{2.0} \PYG{o}{*} \PYG{n}{rand}\PYG{p}{()} \PYG{o}{/} \PYG{p}{(}\PYG{n}{RAND\PYGZus{}MAX} \PYG{o}{+} \PYG{l+m+mf}{1.0}\PYG{p}{));}
+    \PYG{n}{y}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{1.0} \PYG{o}{+} \PYG{p}{(}\PYG{l+m+mf}{2.0} \PYG{o}{*} \PYG{n}{rand}\PYG{p}{()} \PYG{o}{/} \PYG{p}{(}\PYG{n}{RAND\PYGZus{}MAX} \PYG{o}{+} \PYG{l+m+mf}{1.0}\PYG{p}{));}
+  \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

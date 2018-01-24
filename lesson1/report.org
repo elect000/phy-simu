@@ -1,0 +1,199 @@
+#+BEGIN_EXPORT latex
+\begin{titlepage}
+\begin{center}
+\vspace*{2cm}
+{\Large シミュレーション物理 \par}
+ \par
+\vspace{2cm}
+{\Large 演習課題(1) \par}
+\vspace{2cm}
+{\large \today}
+\date{2018/01/25}
+\end{center}
+\vfill
+筑波大学 情報学群 情報科学類 二年\\
+江畑 拓哉(201611350)
+\end{titlepage}
+
+\tableofcontents
+#+END_EXPORT
+#+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:t ^:t arch:headline author:t
+#+OPTIONS: broken-links:nil c:nil creator:nil d:(not "LOGBOOK") date:t e:t
+#+OPTIONS: email:nil f:t inline:t num:t p:nil pri:nil prop:nil stat:t tags:t
+#+OPTIONS: tasks:t tex:t timestamp:t title:nil toc:nil todo:t |:t
+#+TITLE: report
+#+AUTHOR: elect
+#+EMAIL: 
+#+LANGUAGE: en
+#+SELECT_TAGS: export
+#+EXCLUDE_TAGS: noexport
+#+CREATOR: Emacs 25.3.1 (Org mode 9.1.6)
+
+#+LATEX_CLASS: koma-article
+#+LATEX_CLASS_OPTIONS:
+#+LATEX_HEADER:
+#+LATEX_HEADER_EXTRA:
+#+DESCRIPTION:
+#+KEYWORDS:
+#+SUBTITLE:
+#+LATEX_COMPILER: pdflatex
+#+DATE: \today
+* 実験の目的
+  　本実験はヒットミス法を用いた半径=1の円の面積を求めるにあたり、その視覚的特徴とヒットミス法の精度について学習するためのものである。具体的には、 $\textcircled{\scriptsize1}$ モンテカルロ法によって得られる半径1の円内に分布する点群を確認しこの分布がどのようになっているのかを視覚的に確認する、 $\textcircled{\scriptsize2}$ ヒットミス法によって得られる点群がどの程度円周率と関連づいているのかを確認する、というそれぞれの目的に基づいて出題されている。
+
+* 実験方法
+  　作成したそれぞれのプログラムを実行する。実験 $\textcircled{\scriptsize1}$ で用いたプログラムは  gen $\textunderscore$ graph.c であり、実験 $\textcircled{\scriptsize2}$ で用いたプログラムは hitmiss.c　である。
+  　実験　$\textcircled{\scriptsize1}$ の結果確認は出力を csv ファイルとして受け取りこれを Excel で読み込んで Scatter plot を行い、実験　$\textcircled{\scriptsize2}$ は標準出力から確認した。
+  　実行環境についての情報を以下に列挙する。
+  - プログラムとコンパイル
+    - Manjaro Linux 17.1.2
+    - gcc (GCC) 7.2.1 20171224
+    - GNU Emacs 25.3.1 (x86_64-pc-linux-gnu, GTK+ Version 3.22.26) of 2017-12-05
+  - Excel
+    - Microsoft \textsuperscript{\textregistered} Excel \textsuperscript{\textregistered} 2016 MSO (16.0.8827.2131) 32bit
+* 実験結果
+  - 実験 $\textcircled{\scriptsize1}$
+    以下のグラフを得た。
+    #+CAPTION: 実験 $\textcircled{\scriptsize1}$ の Scatter Plot
+    #+NAME: Figure.1
+    #+ATTR_LATEX: :width 10cm
+    [[./fig1.png]]
+  - 実験　$\textcircled{\scriptsize2}$    
+    　以下の標準出力を得た。
+    #+BEGIN_SRC shell
+  100: 3.116000 : 0.008146
+ 1000: 3.166400 : -0.007897
+10000: 3.143320 : -0.000551
+    #+END_SRC
+    　これを指定されている表に合わせると以下のようになる。
+    #+CAPTION: 実験 $\textcircled{\scriptsize2}$ の 表
+    #+NAME: Table.1
+    #+ATTR_LATEX: :environment tabular :align |c|c|c|c|
+    |-------------------------------------+----------+-----------+-----------|
+    | 乱数の組(点の数)                    |      100 |      1000 |     10000 |
+    |-------------------------------------+----------+-----------+-----------|
+    | 面積の平均値(10試行)                | 3.116000 |  3.166400 |  3.143320 |
+    |-------------------------------------+----------+-----------+-----------|
+    | ($\pi$ - 面積の平均値) $\div$ $\pi$ | 0.008146 | -0.007897 | -0.000551 |
+    |-------------------------------------+----------+-----------+-----------|
+* 考察
+  　実験 $\textcircled{\scriptsize1}$ については、図から密度がほぼ一様な円の形をはっきりと認識できる。点群そのものが一様乱数によって発生しているため、円外の点を除いた点群が円の形に見えるこの結果は当然のものだと考えられる。C言語で実装したために配列の長さを柔軟に変えることが難しく、乱数の組 (x, y) の片方 x の条件に合うような y を選ぶようなアルゴリズムになっているが、別言語での実装を行うならばある無限長の長さの乱数の組 (x, y) を作成し、これを先頭から条件を満たすものだけ取り出していく形を取った方がより題意に沿っているのではないかと考えている。
+  　実験 $\textcircled{\scriptsize1}$ については、ミスヒット法がどの程度円周率に近似できるかを確認することができたが、これは円の面積分だけ面積一定な小さいセルをはめ込んでいると考えれば $\pi * 1 * 1 = \pi$ に値が等しくなることが理解できる。またセル面積が小さいほど、つまりセルの数が多くなるほど誤差が小さくなることはラスター画像を拡大した際に見ることができるジャギーを想像すれば理解できる。この実験において乱数の組の数を100倍して誤差が $1/10$ 未満に下がったことは素晴らしいことだと考えられる。また一様乱数の生成を独立して行うことができる場合、これを並列処理することができればより短い時間で同じ数の点を打つことができ、それに伴って精度も向上すると考えている。
+* プログラムのリスト
+  gen $\textunderscore$ graph.c
+  #+BEGIN_SRC C
+#include <stdio.h>
+#include <stdlib.h>
+
+void result_to_csv (int, double*, double*);
+void set_correct_values (int, double*, double*);
+int check (double, double);
+
+int main (void) {
+  int N = 500;
+  double x [N];
+  double y [N];
+
+  set_correct_values(N, x, y);
+  result_to_csv(N, x, y);
+  return 0;
+}
+
+void set_correct_values (int N, double* x, double* y) {
+  srand(691);
+  int i, j;
+  double x_, y_;
+  for (i = 0; i < N; ++i) {
+    x[i] = x_ =  -1.0 + (2.0 * rand() / (RAND_MAX + 1.0));
+    y_ = -                     1.0 + (2.0 * rand() / (RAND_MAX + 1.0));
+    while (check (x_, y_)) {
+      y_ = -1.0 + (2.0 * rand() / (RAND_MAX + 1.0));
+    }
+    y [i] = y_;
+  }
+}
+
+int check (double x, double y) {
+   if (1.0 >= ((x * x) + (y * y))) {
+     return 0;
+   }
+  return 1;
+}
+
+void result_to_csv (int N, double* x, double* y) {
+  FILE *fo;
+  int i;
+  char* fname = "data.csv";
+  if ((fo = fopen(fname, "w")) == NULL) {
+    printf ("File[%s] does not open!! \n", fname);
+    exit (0);
+  }
+  for (i = 0; i < N; ++i) {
+    fprintf (fo, "%f, %f\n", x [i], y [i]);
+  }
+}
+  #+END_SRC
+
+  hitmiss.c
+  #+BEGIN_SRC C
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MY_PI 3.14159
+
+void set_values (int, int, double*, double*);
+double hit_miss_test (int, double*, double*);
+
+int main (void) {
+  double *x;
+  double *y;
+
+  int t[3] = {100, 1000, 10000};
+  int seed [10] = {149, 193, 251, 383, 457, 503, 691, 761, 829, 991};
+  int i, j;
+  double hits;
+  for (i = 0; i < sizeof (t) / sizeof (t [0]); ++i) {
+    hits = 0.0;
+    x = (double*) malloc (sizeof (double) * t[i]);
+    y = (double*) malloc (sizeof (double) * t[i]);
+
+    if ((x == NULL) || (y == NULL)) {
+      printf ("malloc error \n");
+      exit (0);
+    }
+
+    for (j = 0; j < 10; ++j) {
+      set_values(seed [j], t[i], x, y);
+      hits += hit_miss_test (t [i], x, y);
+    }
+    hits = (hits / 10.0) * 4.0;
+    printf ("%5d: %f : %f\n",
+            t [i], hits, ((MY_PI - hits) / MY_PI));
+  }
+  free(x);
+  free(y);
+  return 0;
+}
+
+double hit_miss_test (int N, double* x, double* y) {
+  int i;
+  int hit = 0;
+  for (i = 0; i < N; ++i) {
+    if (1.0 >= ((x [i] * x [i]) + (y [i] * y [i]))) {
+      hit++;
+    }
+  }
+  return ((double) hit / N);
+}
+
+void set_values (int seed, int N, double *x, double *y) {
+  srand(seed);
+  int i;
+  for (i = 0; i < N; ++i) {
+    x[i] = -1.0 + (2.0 * rand() / (RAND_MAX + 1.0));
+    y[i] = -1.0 + (2.0 * rand() / (RAND_MAX + 1.0));
+  }
+}
+
+
+  #+END_SRC

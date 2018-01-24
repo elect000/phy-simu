@@ -21,7 +21,7 @@ void set_correct_values (int N, double* x, double* y) {
   double x_, y_;
   for (i = 0; i < N; ++i) {
     x[i] = x_ =  -1.0 + (2.0 * rand() / (RAND_MAX + 1.0));
-    y_ = -1.0 + (2.0 * rand() / (RAND_MAX + 1.0));
+    y_ = -                     1.0 + (2.0 * rand() / (RAND_MAX + 1.0));
     while (check (x_, y_)) {
       y_ = -1.0 + (2.0 * rand() / (RAND_MAX + 1.0));
     }
