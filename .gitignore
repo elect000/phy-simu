@@ -1,3 +1,15 @@
 *.tex
 *.aux
 *.log
+*.bcf
+*.out
+*.toc
+*.xml
+*/ltximg/
+*/_minted-report/
+*.out
+*.dvi
+*.tex
+*.aux
+*.bcf
+*.csv
