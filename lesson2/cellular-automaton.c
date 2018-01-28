@@ -18,6 +18,7 @@ int main (void) {
   int prev[size];
   int next[size];
   for (i = 0; i < 3; ++i) {
+    printf ("density: %.1f\n", density [i]);
     generate_vector(density[i], size, prev);
     print_vector(0, size,  prev);
     for (j = 1; j < 21; ++j) {
@@ -43,7 +44,7 @@ int check (int k) {
 void celluar_automaton (int size, int* prev, int* next) {
   int i, k;
   // i = 0
-  k = prev [size - 1] * 100 + prev [i] * 10 + prev [i + 1] * 1;
+  k = prev [size - 1] * 100 + prev [0] * 10 + prev [0 + 1] * 1;
   next [0] = check (k);
   // i = 1 ... (size - 1) - 1
   for (i = 1; i < (size - 1); ++i) {

@@ -30,13 +30,200 @@
 
 #+LATEX_CLASS: koma-article
 #+LATEX_CLASS_OPTIONS:
-#+LATEX_HEADER:
+#+LATEX_HEADER: \usepackage{caption}
 #+LATEX_HEADER_EXTRA:
 #+DESCRIPTION:
 #+KEYWORDS:
 #+SUBTITLE:
 #+LATEX_COMPILER: pdflatex
 #+DATE: \today
+* 実験の目的
+  　本実験はセル・オートマトン（CA）の挙動を確認するとともに、そのアルゴリズムを理解するためのものである。具体的には、184規則と呼ばれる規則に基づいてセル・オートマトンのプログラムを作成し、これを複数の密度を持つ初期状態に対して適用、その挙動を観察する。
+* 実験方法
+  　作成したプログラムを実行する。
+  　実行環境についての情報を以下に列挙する。
+  - プログラムとコンパイル
+    - Manjaro Linux 17.1.2
+    - gcc (GCC) 7.2.1 20171224
+    - GNU Emacs 26.0.91 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.22.26) of 2018-01-26
 
-#+BEGIN_SRC shell
-#+END_SRC
+* 実験結果
+  以下の実験結果を得た。
+  \captionof{listing}{Standard Output}
+  #+BEGIN_SRC text
+density: 0.3
+t =  0: 0 0 0 0 0 0 1 0 0 0 1 1 0 1 1 0 1 0 0 0
+t =  1: 0 0 0 0 0 0 0 1 0 0 1 0 1 1 0 1 0 1 0 0
+t =  2: 0 0 0 0 0 0 0 0 1 0 0 1 1 0 1 0 1 0 1 0
+t =  3: 0 0 0 0 0 0 0 0 0 1 0 1 0 1 0 1 0 1 0 1
+t =  4: 1 0 0 0 0 0 0 0 0 0 1 0 1 0 1 0 1 0 1 0
+t =  5: 0 1 0 0 0 0 0 0 0 0 0 1 0 1 0 1 0 1 0 1
+t =  6: 1 0 1 0 0 0 0 0 0 0 0 0 1 0 1 0 1 0 1 0
+t =  7: 0 1 0 1 0 0 0 0 0 0 0 0 0 1 0 1 0 1 0 1
+t =  8: 1 0 1 0 1 0 0 0 0 0 0 0 0 0 1 0 1 0 1 0
+t =  9: 0 1 0 1 0 1 0 0 0 0 0 0 0 0 0 1 0 1 0 1
+t = 10: 1 0 1 0 1 0 1 0 0 0 0 0 0 0 0 0 1 0 1 0
+t = 11: 0 1 0 1 0 1 0 1 0 0 0 0 0 0 0 0 0 1 0 1
+t = 12: 1 0 1 0 1 0 1 0 1 0 0 0 0 0 0 0 0 0 1 0
+t = 13: 0 1 0 1 0 1 0 1 0 1 0 0 0 0 0 0 0 0 0 1
+t = 14: 1 0 1 0 1 0 1 0 1 0 1 0 0 0 0 0 0 0 0 0
+t = 15: 0 1 0 1 0 1 0 1 0 1 0 1 0 0 0 0 0 0 0 0
+t = 16: 0 0 1 0 1 0 1 0 1 0 1 0 1 0 0 0 0 0 0 0
+t = 17: 0 0 0 1 0 1 0 1 0 1 0 1 0 1 0 0 0 0 0 0
+t = 18: 0 0 0 0 1 0 1 0 1 0 1 0 1 0 1 0 0 0 0 0
+t = 19: 0 0 0 0 0 1 0 1 0 1 0 1 0 1 0 1 0 0 0 0
+t = 20: 0 0 0 0 0 0 1 0 1 0 1 0 1 0 1 0 1 0 0 0
+
+density: 0.5
+t =  0: 0 0 0 1 0 0 1 0 0 1 1 1 1 1 1 0 1 1 0 0
+t =  1: 0 0 0 0 1 0 0 1 0 1 1 1 1 1 0 1 1 0 1 0
+t =  2: 0 0 0 0 0 1 0 0 1 1 1 1 1 0 1 1 0 1 0 1
+t =  3: 1 0 0 0 0 0 1 0 1 1 1 1 0 1 1 0 1 0 1 0
+t =  4: 0 1 0 0 0 0 0 1 1 1 1 0 1 1 0 1 0 1 0 1
+t =  5: 1 0 1 0 0 0 0 1 1 1 0 1 1 0 1 0 1 0 1 0
+t =  6: 0 1 0 1 0 0 0 1 1 0 1 1 0 1 0 1 0 1 0 1
+t =  7: 1 0 1 0 1 0 0 1 0 1 1 0 1 0 1 0 1 0 1 0
+t =  8: 0 1 0 1 0 1 0 0 1 1 0 1 0 1 0 1 0 1 0 1
+t =  9: 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+t = 10: 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+t = 11: 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+t = 12: 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+t = 13: 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+t = 14: 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+t = 15: 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+t = 16: 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+t = 17: 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+t = 18: 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+t = 19: 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+t = 20: 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+
+density: 0.7
+t =  0: 0 0 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 0 1
+t =  1: 1 0 1 0 1 0 0 1 1 1 1 1 1 1 1 1 1 0 1 0
+t =  2: 0 1 0 1 0 1 0 1 1 1 1 1 1 1 1 1 0 1 0 1
+t =  3: 1 0 1 0 1 0 1 1 1 1 1 1 1 1 1 0 1 0 1 0
+t =  4: 0 1 0 1 0 1 1 1 1 1 1 1 1 1 0 1 0 1 0 1
+t =  5: 1 0 1 0 1 1 1 1 1 1 1 1 1 0 1 0 1 0 1 0
+t =  6: 0 1 0 1 1 1 1 1 1 1 1 1 0 1 0 1 0 1 0 1
+t =  7: 1 0 1 1 1 1 1 1 1 1 1 0 1 0 1 0 1 0 1 0
+t =  8: 0 1 1 1 1 1 1 1 1 1 0 1 0 1 0 1 0 1 0 1
+t =  9: 1 1 1 1 1 1 1 1 1 0 1 0 1 0 1 0 1 0 1 0
+t = 10: 1 1 1 1 1 1 1 1 0 1 0 1 0 1 0 1 0 1 0 1
+t = 11: 1 1 1 1 1 1 1 0 1 0 1 0 1 0 1 0 1 0 1 1
+t = 12: 1 1 1 1 1 1 0 1 0 1 0 1 0 1 0 1 0 1 1 1
+t = 13: 1 1 1 1 1 0 1 0 1 0 1 0 1 0 1 0 1 1 1 1
+t = 14: 1 1 1 1 0 1 0 1 0 1 0 1 0 1 0 1 1 1 1 1
+t = 15: 1 1 1 0 1 0 1 0 1 0 1 0 1 0 1 1 1 1 1 1
+t = 16: 1 1 0 1 0 1 0 1 0 1 0 1 0 1 1 1 1 1 1 1
+t = 17: 1 0 1 0 1 0 1 0 1 0 1 0 1 1 1 1 1 1 1 1
+t = 18: 0 1 0 1 0 1 0 1 0 1 0 1 1 1 1 1 1 1 1 1
+t = 19: 1 0 1 0 1 0 1 0 1 0 1 1 1 1 1 1 1 1 1 0
+t = 20: 0 1 0 1 0 1 0 1 0 1 1 1 1 1 1 1 1 1 0 1
+  #+END_SRC
+
+* 考察
+  　この実験によって184規則に従うセル・オートマトンの挙動はその殆どがずれていく様子を観察することができた。また境界同士で繋がっているモデルを採用しているため、大凡において整然とした斜め柄が描かれている。
+  　また密度に応じて斜め柄の向きが変わっているように観察ができるが、これが184規則の特徴的ないくつかの遷移が原因しているものだと考えられる。例えば、 $001 \rightarrow 0$ $100 \rightarrow 1$ といった ``1'' の数が少ない場合の遷移は右に遷移しているように考えられ、 $011 \rightarrow 1$ といった ``1'' の数が多い場合の遷移は左に遷移しているように考えられる。
+  　つまりこの規則はランダムに設定された結果現れたものではなく、はっきりとした恣意があった上で設定されて現れたものであると考えることができる。
+* プログラムのリスト
+  \captionof{listing}{cellular-automaton.c}
+  #+BEGIN_SRC C
+#include <stdio.h>
+#include <stdlib.h>
+
+// 111, 101, 100, 011 -> 1 : others -> 0
+static int rules[4] = {111, 101, 100, 11};
+
+int check (int);
+void celluar_automaton (int, int*, int*);
+void generate_vector (float, int, int*);
+void shuffle (int, int*);
+void print_vector (int, int, int*);
+void move_vector (int, int*, int*);
+
+int main (void) {
+  int i, j;
+  float density[3] = {0.3, 0.5, 0.7};
+  int size = 20;
+  int prev[size];
+  int next[size];
+  for (i = 0; i < 3; ++i) {
+    printf ("density: %.1f\n", density [i]);
+    generate_vector(density[i], size, prev);
+    print_vector(0, size,  prev);
+    for (j = 1; j < 21; ++j) {
+      celluar_automaton(size, prev, next);
+      print_vector(j, size, next);
+      move_vector(size, prev, next);
+    }
+    printf ("\n");
+  }
+  return 0;
+}
+
+int check (int k) {
+  int i;
+  for (i = 0; i < (sizeof (rules)/ sizeof (rules [0])); ++i) {
+    if (k == rules [i]) {
+      return 1;
+    }
+  }
+  return 0;
+}
+
+void celluar_automaton (int size, int* prev, int* next) {
+  int i, k;
+  // i = 0
+  k = prev [size - 1] * 100 + prev [0] * 10 + prev [0 + 1] * 1;
+  next [0] = check (k);
+  // i = 1 ... (size - 1) - 1
+  for (i = 1; i < (size - 1); ++i) {
+    k = prev [i - 1] * 100 + prev [i] * 10 + prev [i + 1] * 1;
+    next [i] = check (k);
+  }
+  // i = size - 1
+  k = prev [(size - 1) - 1] * 100 + prev [size - 1] * 10 + prev [0] * 1;
+  next [i] = check (k);
+}
+
+void generate_vector (float density, int size, int* vec) {
+  int i;
+  int l = (int) (density * size);
+  for (i = 0; i < size; ++i) {
+    if (i < l) {
+      vec [i] = 1;
+    } else {
+      vec [i] = 0;
+    }
+  }
+  shuffle (size, vec);
+}
+
+void shuffle (int size, int* vec) {
+  int i;
+  srand (691);
+  for (i = 0; i < size; ++i) {
+    int j = (int) (10 * (rand () / (RAND_MAX + 1.0)));
+    int t = vec [i];
+    vec [i] = vec [j];
+    vec [j] = t;
+  }
+}
+
+void print_vector (int n, int size, int* vec) {
+  int i;
+  printf ("t = %2d:", n);
+  for (i = 0; i < size; ++i) {
+    printf (" %d", vec [i]);
+  }
+  printf ("\n");
+}
+
+void move_vector (int size, int* prev, int* next) {
+  int i;
+  for (i = 0; i < size; ++i) {
+    prev [i] = next [i];
+  }
+}
+  #+END_SRC
+
