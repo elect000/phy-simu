@@ -27,7 +27,7 @@ void init_place () {
   for (int t = 0; t < 500; ++t) {
     x = -5.0 + (double) (10.0 * rand()/RAND_MAX);
     y = -5.0 + (double) (10.0 * rand()/RAND_MAX);
-    while (check (x, y)) {
+    while (0 == check (x, y)) {
       x = -5.0 + (double) (10.0 * rand()/RAND_MAX);
       y = -5.0 + (double) (10.0 * rand()/RAND_MAX);
     }
@@ -58,9 +58,10 @@ void print_move () {
 
 int main (void) {
   init_place ();
+  print_move ();
   for (int i = 0; i < nk; ++i) {
-    print_move ();
     move ();
   }
+  print_move ();
   return 0;
 }
