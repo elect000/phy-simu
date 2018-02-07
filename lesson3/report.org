@@ -1,0 +1,51 @@
+#+BEGIN_EXPORT latex
+\begin{titlepage}
+\begin{center}
+\vspace*{2cm}
+{\Large シミュレーション物理 \par}
+ \par
+\vspace{2cm}
+{\Large 演習課題(3,4) \par}
+\vspace{2cm}
+{\large \today}
+\end{center}
+\vfill
+筑波大学 情報学群 情報科学類 二年\\
+江畑 拓哉(201611350)
+\end{titlepage}
+
+\tableofcontents
+#+END_EXPORT
+#+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline author:t
+#+OPTIONS: broken-links:nil c:nil creator:nil d:(not "LOGBOOK") date:t e:t
+#+OPTIONS: email:nil f:t inline:t num:t p:nil pri:nil prop:nil stat:t tags:t
+#+OPTIONS: tasks:t tex:t timestamp:t title:nil toc:nil todo:t |:t
+#+TITLE: report
+#+AUTHOR: elect
+#+EMAIL: 
+#+LANGUAGE: en
+#+SELECT_TAGS: export
+#+EXCLUDE_TAGS: noexport
+#+CREATOR: Emacs 26.0.91 (Org mode 9.1.6)
+
+#+LATEX_CLASS: koma-article
+#+LATEX_CLASS_OPTIONS:
+#+LATEX_HEADER:
+#+LATEX_HEADER_EXTRA:
+#+DESCRIPTION:
+#+KEYWORDS:
+#+SUBTITLE:
+#+LATEX_COMPILER: pdflatex
+#+DATE: \today
+
+* 実験の目的
+  
+* COMMENT 実験方法
+  
+  　実行環境についての情報を以下に列挙する。
+  - プログラムとコンパイル
+    - Manjaro Linux 17.1.4
+    - gcc (GCC) 7.2.1 20180116
+    - GNU Emacs 26.0.91 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.22.26) of 2018-01-26
+  - Excel
+    - Microsoft \textsuperscript{\textregistered} Excel \textsuperscript{\textregistered} 2016 MSO (16.0.8827.2131) 32bit
