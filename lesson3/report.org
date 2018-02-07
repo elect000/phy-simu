@@ -16,7 +16,7 @@
 
 \tableofcontents
 #+END_EXPORT
-#+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline author:t
+#+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:nil ^:nil arch:headline author:t
 #+OPTIONS: broken-links:nil c:nil creator:nil d:(not "LOGBOOK") date:t e:t
 #+OPTIONS: email:nil f:t inline:t num:t p:nil pri:nil prop:nil stat:t tags:t
 #+OPTIONS: tasks:t tex:t timestamp:t title:nil toc:nil todo:t |:t
@@ -39,9 +39,10 @@
 #+DATE: \today
 
 * 実験の目的
-  
-* COMMENT 実験方法
-  
+  　本実験は、演習課題(3)として引力を無視した場合の銀河の膨張のシュミレーションを行い、演習課題(4)としてはガウス・ザイデル法を用いて偏微分方程式を解いた。前者はまず引力を考えずに銀河の膨張を考えることで引力を考えた場合の宇宙の膨張をシュミレーションする場合の足がかりとするための実験であり、後者は重力場を計算する場合等に必要となる偏微分方程式を解決するための手段を身につけるための実験である。
+* 実験方法
+  　演習課題(3) についてはプログラム extension.c を作成し、実行した出力を Excel を用いて確認した。演習課題(4) についてはプログラム gaus_seidel.c を作成し、実行した出力を標準出力から確認した。
+
   　実行環境についての情報を以下に列挙する。
   - プログラムとコンパイル
     - Manjaro Linux 17.1.4
@@ -49,3 +50,176 @@
     - GNU Emacs 26.0.91 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.22.26) of 2018-01-26
   - Excel
     - Microsoft \textsuperscript{\textregistered} Excel \textsuperscript{\textregistered} 2016 MSO (16.0.8827.2131) 32bit
+* 実験結果
+  - 演習課題 (3)
+    　以下のグラフを得た。
+    #+CAPTION: 演習課題(3) の Scatter Plot
+    #+ATTR_LATEX: :width 16cm
+    [[./res.PNG]]
+
+  - 演習課題 (4)
+    　標準出力から以下の出力を得た。
+    #+LATEX: \captionof{listing}{Standard Output}
+    #+BEGIN_SRC text
+$ ./a.out
+0.000000 22.500000 36.000000 0.000000 
+0.000000 9.000000 12.000000 9.000000 
+0.000000 1.500000 0.000000 -4.500000 
+0.000000 0.000000 0.000000 0.000000 
+    #+END_SRC
+    
+    　解析解の式 $\Phi (x, y) = 3 xy^2 - 1.5x^2y$ による出力予測を以下に示す。
+    #+BEGIN_SRC text
+0 22.5 36 40.5
+0    9 12    9
+0  1.5  0 -4.5
+0    0  0    0
+    #+END_SRC
+    　これにより出力が期待したものであると考えることが出来る。
+* 考察
+  　演習課題 (3) については単純な拡大図に近い出力が得られた。実際それぞれの点に対して同じ写像を適用しているのでこのような出力になることは当然であると考えられる。
+  　演習課題 (4) については反復法の一種であるガウスザイデル法を行ったが、反復法の条件について気になった。反復法の多くは収束条件があり、ガウスザイデル法は係数行列が対角優位であることが求められるが、今回は特にそれについて検査を行わなかった。実用上はガウスザイデル法を適用する前に係数行列に検査を加えるか、問題を収束するものに限定する必要があるのではないかと考えている。
+* プログラムのリスト
+  extension.c
+  #+BEGIN_SRC C
+#include <stdio.h>
+#include <stdlib.h>
+
+const double H = 3.5;
+const int org = 50;
+const double delta_t = 0.1;
+const int nk = 20;
+const int seed = 449;
+double X [500];
+double Y [500];
+
+void init_place();
+int check (double, double);
+void move ();
+void print_move ();
+
+int check (double x, double y) {
+  if ((x * x + y * y) > 25.0) {
+    return 0;
+  } else {
+    return 1;
+  }
+}
+
+void init_place () {
+  double x, y;
+  srand(seed);
+  for (int t = 0; t < 500; ++t) {
+    x = -5.0 + (double) (10.0 * rand()/RAND_MAX);
+    y = -5.0 + (double) (10.0 * rand()/RAND_MAX);
+    while (0 == check (x, y)) {
+      x = -5.0 + (double) (10.0 * rand()/RAND_MAX);
+      y = -5.0 + (double) (10.0 * rand()/RAND_MAX);
+    }
+    X [t] = x;
+    Y [t] = y;
+  }
+}
+
+void move () {
+  for (int ip = 0; ip < 500; ++ip) {
+    double vx_ip = H * X [ip];
+    double vy_ip = H * Y [ip];
+
+    X [ip] = X [ip] + org;
+    Y [ip] = Y [ip] + org;
+
+    X [ip] = X [ip] + vx_ip * delta_t;
+    Y [ip] = Y [ip] + vy_ip * delta_t;
+  }
+}
+
+void print_move () {
+  printf ("\n");
+  for (int t = 0; t < 500; ++t) {
+    printf ("%f,%f\n", X [t], Y [t]);
+  }
+}
+
+int main (void) {
+  init_place ();
+  print_move ();
+  for (int i = 0; i < nk; ++i) {
+    move ();
+  }
+  print_move ();
+  return 0;
+}
+  #+END_SRC
+  
+  gaus_seidel.c
+  #+BEGIN_SRC C
+#include <stdio.h>
+
+double rho_func(int, int);
+void init_phi();
+void init_rho();
+void gaus_xaiel(int);
+void print_phi();
+
+#define G  1.0
+const int ni = 200;
+const int nm = 2;
+const double delta_x = 1;
+const double delta_y = 1;
+double phi[4][4];
+double rho[4][4];
+
+double rho_func(int x, int y) {
+  return (6 * x) - (3 * y);
+}
+
+void init_phi () {
+  for (int t = 0; t < 4 ; t++) {
+    phi[t][0] = 0.0;
+    phi[0][t] = 0.0;
+  }
+  phi[1][3] = 22.5;
+  phi[2][3] = 36.0;
+  phi[3][1] = -4.5;
+  phi[3][2] = 9.0;
+}
+
+void init_rho () {
+  for (int ix = 0; ix < 4; ix++) {
+    for(int iy = 0; iy < 4; iy++) {
+      rho[ix][iy] = rho_func(ix, iy);
+    }
+  }
+}
+
+void gaus_xaiel (int nm) {
+  double p1;
+  double p2;
+  for (int i = 1; i <= ni; i++) {
+    for (int ix = 1; ix <= nm; ix++) {
+      for (int iy = 1; iy <= nm; iy++) {
+        p1 = phi[ix+1][iy] + phi[ix-1][iy] + phi[ix][iy+1] + phi[ix][iy-1];
+        p2 = G * rho[ix][iy] * delta_x * delta_y;
+        phi[ix][iy] = p1 / 4.0 - p2 / 4.0;
+      }
+    }
+  }
+}
+
+void print_phi(){
+  for (int iy = 3; iy > -1; iy--) {
+    for (int ix = 0; ix < 4; ix++) {
+      printf("%f ",phi[ix][iy]);
+    }
+    printf("\n");
+  }
+}
+int main (void) {
+  init_phi();
+  init_rho();
+  gaus_xaiel(nm);
+  print_phi();
+  return 0;
+}
+  #+END_SRC
