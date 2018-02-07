@@ -15,10 +15,11 @@ void move ();
 void print_move ();
 
 int check (double x, double y) {
-  if ((x * x + y * y) <= 25) {
+  if ((x * x + y * y) > 25.0) {
+    return 0;
+  } else {
     return 1;
   }
-  return 0;
 }
 
 void init_place () {
