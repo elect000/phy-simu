@@ -26,7 +26,7 @@
 #+LANGUAGE: en
 #+SELECT_TAGS: export
 #+EXCLUDE_TAGS: noexport
-#+CREATOR: Emacs 25.3.1 (Org mode 9.1.6)
+#+CREATOR: Emacs 26.0.91 (Org mode 9.1.6)
 
 #+LATEX_CLASS: koma-article
 #+LATEX_CLASS_OPTIONS:
@@ -37,3 +37,13 @@
 #+SUBTITLE:
 #+LATEX_COMPILER: pdflatex
 #+DATE: \today
+
+* COMMENT 実験方法
+  
+  　実行環境についての情報を以下に列挙する。
+  - プログラムとコンパイル
+    - Manjaro Linux 17.1.4
+    - gcc (GCC) 7.2.1 20180116
+    - GNU Emacs 26.0.91 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.22.26) of 2018-01-26
+  - Excel
+    - Microsoft \textsuperscript{\textregistered} Excel \textsuperscript{\textregistered} 2016 MSO (16.0.8827.2131) 32bit

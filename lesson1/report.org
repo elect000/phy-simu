@@ -1,4 +1,4 @@
-#+BEGIN_EXPORT latex
+\#+BEGIN_EXPORT latex
 \begin{titlepage}
 \begin{center}
 \vspace*{2cm}

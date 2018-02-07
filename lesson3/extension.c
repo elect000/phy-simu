@@ -50,6 +50,7 @@ void move () {
   }
 }
 
+
 void print_move () {
   printf ("\n");
   for (int t = 0; t < 500; ++t) {
