@@ -10,12 +10,12 @@ double X [500];
 double Y [500];
 
 void init_place();
-int check (int, int);
+int check (double, double);
 void move ();
 void print_move ();
 
-int check (int x, int y) {
-  if (x * x + y * y <= 5 * 5) {
+int check (double x, double y) {
+  if ((x * x + y * y) <= 25) {
     return 1;
   }
   return 0;
