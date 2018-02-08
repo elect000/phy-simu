@@ -9,7 +9,7 @@ const double H = 3.5;
 const int ni = 50;
 const double delta_t = 0.1;
 const int seed = 449;
-const int org = 50;
+const int org = 200;
 const int delta_x = 1;
 const int delta_y = 1;
 
@@ -104,18 +104,12 @@ void calc_power_field () {
   for (int ix = 0; ix < 500; ++ix) {
     for (int iy = 0; iy < 500; ++iy) {
       Fx[ix][iy] = -((phi[ix + 1][iy]) - (phi[ix][iy])) / delta_x;
-      // Fx[ix][iy] = -(phi[ix][iy + 1] - phi[ix][iy]) / delta_y;
     }
   }
 }
 
 int find_point (double p) {
-  float p_;
-  if (modff (p, &p_) < 0.5) {
-    return (int) p_;
-  } else {
-    return (int) (p_ + 1);
-  }
+  return floor(p);
 }
 
 void calc_power () {
