@@ -26,10 +26,6 @@ double Fpy[500];
 double vx[500];
 double vy[500];
 
-double vxi[500];
-double vyi[500];
-
-
 void init_place();
 int check(double, double);
 void move_a ();
@@ -77,8 +73,8 @@ void init_phi () {
 
 void move_a () {
   for (int ip = 0; ip < 500; ++ip) {
-    X [ip] = X [ip] + vxi[ip] * delta_t;
-    Y [ip] = Y [ip] + vyi[ip] * delta_t;
+    X [ip] = X [ip] + vx[ip] * delta_t;
+    Y [ip] = Y [ip] + vy[ip] * delta_t;
   }
 }
 
@@ -170,8 +166,8 @@ int main (void) {
   init_place ();
 
   for (int ip = 0; ip < 500; ++ip) {
-    vxi[ip] = H * X [ip];
-    vyi[ip] = H * Y [ip];
+    vx[ip] = H * X [ip];
+    vy[ip] = H * Y [ip];
 
     X [ip] = X [ip] + org;
     Y [ip] = Y [ip] + org;
