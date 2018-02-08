@@ -9,10 +9,22 @@ const int seed = 449;
 double X [500];
 double Y [500];
 
+
 void init_place();
 int check (double, double);
 void move ();
 void print_move ();
+
+double vx[500];
+double vy[500];
+
+
+void init_v () {
+  for (int i = 0; i < 500; ++i) {
+    vx[i] = H * X [i];
+    vy[i] = H * Y [i];
+  }
+}
 
 int check (double x, double y) {
   if ((x * x + y * y) > 25.0) {
@@ -37,13 +49,12 @@ void init_place () {
   }
 }
 
+
 void move () {
   for (int ip = 0; ip < 500; ++ip) {
-    double vx_ip = H * X [ip];
-    double vy_ip = H * Y [ip];
 
-    X [ip] = X [ip] + vx_ip * delta_t;
-    Y [ip] = Y [ip] + vy_ip * delta_t;
+    X [ip] = X [ip] + vx[ip] * delta_t;
+    Y [ip] = Y [ip] + vy[ip] * delta_t;
   }
 }
 
@@ -57,11 +68,12 @@ void print_move () {
 
 int main (void) {
   init_place ();
-  print_move ();
+  init_v ();
   for (int ip = 0; ip < 500; ++ip) {
     X [ip] = X [ip] + org;
     Y [ip] = Y [ip] + org;
   }
+  print_move ();
   for (int i = 0; i < nk; ++i) {
     move ();
   }
