@@ -10,8 +10,8 @@ const int ni = 50;
 const double delta_t = 0.1;
 const int seed = 449;
 const int org = 50;
-const double delta_x = 1;
-const double delta_y = 1;
+const int delta_x = 1;
+const int delta_y = 1;
 
 double X [500];
 double Y [500];
@@ -103,8 +103,8 @@ void calc_phi () {
 void calc_power_field () {
   for (int ix = 0; ix < 500; ++ix) {
     for (int iy = 0; iy < 500; ++iy) {
-      Fx[ix][iy] = -(phi[ix + 1][iy] + phi[ix][iy]) / delta_x;
-      Fx[ix][iy] = -(phi[ix][iy + 1] + phi[ix][iy]) / delta_y;
+      Fx[ix][iy] = -((phi[ix + 1][iy]) - (phi[ix][iy])) / delta_x;
+      // Fx[ix][iy] = -(phi[ix][iy + 1] - phi[ix][iy]) / delta_y;
     }
   }
 }
@@ -124,7 +124,7 @@ void calc_power () {
     x = find_point (X [i]);
     y = find_point (Y [i]);
     Fpx [i] = M * Fx [x] [y];
-    Fpy [y] = M * Fy [x] [y];
+    Fpy [i] = M * Fy [x] [y];
   }
 }
 
@@ -137,8 +137,8 @@ void calc_velocity () {
 
 void calc_position () {
   for (int i = 0; i < 500; ++i) {
-    X[i] = X[i] + vx[i] * delta_t;
-    Y[i] = Y[i] + vy[i] * delta_t;
+    X[i] += vx[i] * delta_t;
+    Y[i] += vy[i] * delta_t;
   }
 }
 
@@ -176,16 +176,13 @@ int main (void) {
   print_move ();
   init_phi ();
 
-  for (int i = 0; i < 20; ++i) {
+  for (int i = 0; i < 33; ++i) {
     move_b ();
   }
-
   print_move ();
- 
   for (int i = 0; i < 20; ++i) {
     move_b ();
   }
- 
   print_move ();
   return 0;
 }
