@@ -177,15 +177,15 @@ int main (void) {
   init_phi ();
 
   for (int i = 0; i < 20; ++i) {
-    move_a ();
+    move_b ();
   }
 
   print_move ();
-  /**********************************/
-  /* for (int i = 0; i < 20; ++i) { */
-  /*   move_a ();                   */
-  /* }                              */
-  /**********************************/
+ 
+  for (int i = 0; i < 20; ++i) {
+    move_b ();
+  }
+ 
   print_move ();
   return 0;
 }
