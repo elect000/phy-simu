@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 const int nm = 99;
 const int M = 1;
@@ -15,7 +16,7 @@ const double delta_y = 1;
 double X [500];
 double Y [500];
 
-double rho [500];
+double rho [500] [500];
 double phi [500][500];
 
 double Fx[500][500];
@@ -33,6 +34,7 @@ void calc_phi ();
 void calc_power_field ();
 void calc_move ();
 void calc_power ();
+int find_point (double);
 void calc_velocity ();
 void calc_position ();
 void move_b ();
@@ -83,13 +85,25 @@ void move_a () {
 }
 
 void calc_rho () {
-  for (int i = 0; i < 500; ++i) {
-    rho [i] = 6 * X [i] - 3 * Y [i];
+  for (int ix = 0; ix < 500; ++ix) {
+    for (int iy = 0; iy < 500; ++iy) {
+      rho [ix] [iy] = 6 * X [ix] - 3 * Y [iy];
+    }
   }
 }
 
 void calc_phi () {
-  // not yet
+  double p1;
+  double p2;
+  for (int i = 1; i <= ni; ++i) {
+    for (int ix = 1; ix <= nm; ++ix) {
+      for (int iy = 1; iy <= nm; ++iy) {
+        p1 = phi [ix + 1] [iy] + phi [ix - 1] [iy] + phi [ix] [iy + 1] + phi [ix] [iy - 1];
+        p2 = G * rho [ix] [iy] * delta_x * delta_y;
+        phi [ix] [iy] = p1 / 4.0 - p2 / 4.0;
+      }
+    }
+  }
 }
 
 void calc_power_field () {
@@ -101,12 +115,30 @@ void calc_power_field () {
   }
 }
 
+int find_point (double p) {
+  float p_;
+  if (modff (p, &p_) < 0.5) {
+    return (int) p_;
+  } else {
+    return (int) (p_ + 1);
+  }
+}
+
 void calc_power () {
-  // not yet
+  int x, y;
+  for (int i = 0; i < 500; i++) {
+    x = find_point (X [i]);
+    y = find_point (Y [i]);
+    Fpx [i] = M * Fx [x] [y];
+    Fpy [y] = M * Fy [x] [y];
+  }
 }
 
 void calc_velocity () {
-  // not yet
+  for (int ip = 0; ip < 500; ip++) {
+    vx [ip] = vx [ip] + (Fpx [ip] / M) * delta_t;
+    vy [ip] = vy [ip] + (Fpy [ip] / M) * delta_t;
+  }
 }
 
 void calc_position () {
@@ -117,11 +149,9 @@ void calc_position () {
 }
 
 void calc_move () {
-  for (int ip = 1; ip <= 500; ip++) {
-    calc_power ();
-    calc_velocity ();
-    calc_position ();
-  }
+  calc_power ();
+  calc_velocity ();
+  calc_position ();
 }
 
 void move_b () {
