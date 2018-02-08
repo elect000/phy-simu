@@ -3,20 +3,20 @@
 #include <math.h>
 
 const int nm = 99;
-const int M = 1;
-const int G = 1;
+const double M = 1.0;
+const double G = 1.0;
 const double H = 3.5;
-const int ni = 50;
+const int ni = 99;
 const double delta_t = 0.1;
 const int seed = 449;
-const int org = 200;
-const int delta_x = 1;
-const int delta_y = 1;
+const double org = 50.0;
+const double delta_x = 1.0;
+const double delta_y = 1.0;
 
 double X [500];
 double Y [500];
 
-double rho [500] [500];
+double rho [500][500];
 double phi [500][500];
 
 double Fx[500][500];
@@ -79,10 +79,13 @@ void move_a () {
 }
 
 void calc_rho () {
-  for (int ix = 0; ix < 500; ++ix) {
-    for (int iy = 0; iy < 500; ++iy) {
-      rho [ix] [iy] = 6 * X [ix] - 3 * Y [iy];
+  for (int i = 0; i < 500; ++i) {
+    for (int j = 0; j < 500; ++j) {
+      rho[i][j] = 0.0;
     }
+  }
+  for (int i = 0; i < 500; ++i) {
+    rho[(int)floor(X [i] + 0.5)][(int)floor(Y [i] + 0.5)] += M;
   }
 }
 
@@ -90,11 +93,12 @@ void calc_phi () {
   double p1;
   double p2;
   for (int i = 1; i <= ni; ++i) {
-    for (int ix = 1; ix <= nm; ++ix) {
-      for (int iy = 1; iy <= nm; ++iy) {
-        p1 = phi [ix + 1] [iy] + phi [ix - 1] [iy] + phi [ix] [iy + 1] + phi [ix] [iy - 1];
-        p2 = G * rho [ix] [iy] * delta_x * delta_y;
-        phi [ix] [iy] = p1 / 4.0 - p2 / 4.0;
+    for (int ix = 1; ix <= ni; ++ix) {
+      for (int iy = 1; iy <= ni; ++iy) {
+        p1 = phi [ix + 1] [iy] + phi [ix - 1] [iy]
+          + phi [ix] [iy + 1] + phi [ix] [iy - 1];
+        p2 = G * rho [ix] [iy] * delta_x * delta_x;
+        phi [ix] [iy] = (p1 - p2) / 4.0;
       }
     }
   }
@@ -102,14 +106,15 @@ void calc_phi () {
 
 void calc_power_field () {
   for (int ix = 0; ix < 500; ++ix) {
-    for (int iy = 0; iy < 500; ++iy) {
-      Fx[ix][iy] = -((phi[ix + 1][iy]) - (phi[ix][iy])) / delta_x;
+    for (int iy = 0; iy < 500; ++iy) {//((phi[ix][iy] - (phi[ix - 1][iy]))) ((phi[ix][iy] - (phi[ix][iy - 1])))
+      Fx[ix][iy] = ( - ((phi[ix + 1][iy]) - (phi[ix][iy]))) / delta_x;
+      Fy[ix][iy] = ( - ((phi[ix][iy + 1]) - (phi[ix][iy]))) / delta_y;
     }
   }
 }
 
 int find_point (double p) {
-  return floor(p);
+  return floor(p); //!!!
 }
 
 void calc_power () {
@@ -170,7 +175,7 @@ int main (void) {
   print_move ();
   init_phi ();
 
-  for (int i = 0; i < 33; ++i) {
+  for (int i = 0; i < 20; ++i) {
     move_b ();
   }
   print_move ();
