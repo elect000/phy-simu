@@ -42,9 +42,6 @@ void move () {
     double vx_ip = H * X [ip];
     double vy_ip = H * Y [ip];
 
-    X [ip] = X [ip] + org;
-    Y [ip] = Y [ip] + org;
-
     X [ip] = X [ip] + vx_ip * delta_t;
     Y [ip] = Y [ip] + vy_ip * delta_t;
   }
@@ -61,9 +58,14 @@ void print_move () {
 int main (void) {
   init_place ();
   print_move ();
+  for (int ip = 0; ip < 500; ++ip) {
+    X [ip] = X [ip] + org;
+    Y [ip] = Y [ip] + org;
+  }
   for (int i = 0; i < nk; ++i) {
     move ();
   }
   print_move ();
   return 0;
 }
+ 
