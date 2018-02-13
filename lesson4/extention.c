@@ -102,11 +102,11 @@ void calc_phi () {
       }
     }
   }
-}
+
 
 void calc_power_field () {
   for (int ix = 0; ix < 500; ++ix) {
-    for (int iy = 0; iy < 500; ++iy) {//((phi[ix][iy] - (phi[ix - 1][iy]))) ((phi[ix][iy] - (phi[ix][iy - 1])))
+    for (int iy = 0; iy < 500; ++iy) {
       Fx[ix][iy] = ( - ((phi[ix + 1][iy]) - (phi[ix][iy]))) / delta_x;
       Fy[ix][iy] = ( - ((phi[ix][iy + 1]) - (phi[ix][iy]))) / delta_y;
     }
@@ -114,7 +114,7 @@ void calc_power_field () {
 }
 
 int find_point (double p) {
-  return floor(p); //!!!
+  return (int) floor(p + 0.5);
 }
 
 void calc_power () {
